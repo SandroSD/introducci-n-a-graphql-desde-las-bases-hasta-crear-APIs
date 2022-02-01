@@ -1,0 +1,83 @@
+type Query {
+    "Lista de las temporadas de la Fórmula 1, de 1950 a 2019, lo seleccionamos."
+    seasonsList: [Season!]!
+    """
+    Obtenemos la información de las carreras seleccionadas por año.
+    Tener en cuenta que solo existen temporadas desde 1950 a 2019.
+    """
+    racesByYear(year: String!): [Race!]!
+    "Carrera seleccionada por año y por número de carrera"
+    raceSelect(year: String!, round: Int!): Race
+    """
+    Lista de pilotos de la F1 de toda la historia.
+    Tenemos dos opciones:
+    - Por un lado podemos obtener todos los pilotos
+    - Por otro lado, hacemos uso de la paginación y podemos 
+        limitar el número de result
+    """
+    historyDrivers(pageElements: Int, page: Int): [Driver!]!
+    """
+    Obtenemos la información de los pilitos seleccionados por año.
+    Tener en cuenta que solo existen temporadas desde 1950 a 2019.
+    """
+    driversYear(year: String!): [Driver!]!
+    """
+    Obtenemos la información de los pilotos seleccionadas por año y 
+    por carrera.
+    Tener en cuenta que solo existen temporadas desde 1950 a 2019.
+    """
+    driversYearAndRound(year: String!, round: Int!): [Driver!]!
+    "Obtenemos la información del piloto mediante el valor id"
+    driverSelect(id: String!): Driver
+    "Circuitos Históricos"
+    historyCircuits(pageElements: Int, page: Int): [Circuit!]!
+    "Circuito seleccionado"
+    circuitSelect(id: String!): Circuit
+}
+
+"Información de la temporada"
+type Season {
+    "año de la temporada"
+    year: String!
+    "información de wikipedia"
+    url: String!
+    "información de wikipedia adaptada a los dispositivos móviles"
+    urlMobile: String!
+}
+
+type Race {
+    season: String!
+    round: String!
+    url: String!
+    urlMobile: String!
+    name: String!
+    circuit: Circuit!
+    date: String!
+    time: String
+}
+
+type Circuit {
+    id: String!
+    url: String!
+    urlMobile: String!
+    name: String!
+    location: Location!
+}
+
+type Location {
+    lat: String!
+    lng: String!
+    locality: String!
+    country: String!
+}
+
+type Driver {
+    id: String!
+    url: String!
+    urlMobile: String!
+    name: String!
+    dateOfBirth: String!
+    nationality: String!
+    code: String
+    permanentNumber: String
+}
